@@ -1,9 +1,14 @@
+from django.urls import reverse_lazy
 from django.views.generic import ListView, CreateView
 from veiculo.models import Veiculo
+from datetime import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
 from veiculo.forms import FormularioVeiculo
-from django.urls import reverse_lazy
 from django.db.models import Q  # <<---- IMPORTE O Q
+from django.views import View
+from django.http import FileResponse , Http404
+from django.core.exceptions import ObjectDoesNotExist
+
 
 class ListarVeiculos(LoginRequiredMixin, ListView):
     """
@@ -25,9 +30,8 @@ class ListarVeiculos(LoginRequiredMixin, ListView):
         # Se houver um valor para 'busca', filtra os resultados
         if busca:
             # Filtra por modelo OU placa que contenham o termo da busca
-            queryset = queryset.filter(
-                Q(modelo__icontains=busca) | Q(placa__icontains=busca)
-            )
+            queryset = queryset.filter(modelo__icontains=busca)
+                
             
         return queryset
 
@@ -37,5 +41,20 @@ class CriarVeiculo(LoginRequiredMixin, CreateView):
     """
     model = Veiculo
     form_class = FormularioVeiculo
+    template_name = 'veiculo/novo.h.html'
     template_name = 'veiculo/novo.html'
     success_url = reverse_lazy('listar-veiculos')
+
+class FotoVeiculo(View):
+    """
+    Class Based View para exibir a foto do veículo.
+    """
+    def get(self, request, arquivo):
+
+        try:
+            veiculo = Veiculo.objects.get(foto='veiculo/fotos/{}'.format(arquivo))
+            return FileResponse(veiculo.foto)
+        except Veiculo.DoesNotExist:
+            raise Http404('Foto não encontrada.')
+        except Exception as exception:
+            raise exception

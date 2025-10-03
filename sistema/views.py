@@ -2,6 +2,9 @@
 from django.contrib.auth import authenticate, login, logout
 from django.views.generic import View
 from django.shortcuts import render, redirect
+from django.http import HttpResponse
+
+
 
 class Login(View):
     """
@@ -35,5 +38,4 @@ class Logout(View):
     def get(self, request):
         logout(request)
         return redirect('/')
-    
     

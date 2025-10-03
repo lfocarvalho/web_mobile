@@ -43,16 +43,6 @@
     </div>
 
     <div class="mb-4">
-        <label for="placa" class="block text-gray-700 font-semibold mb-2">Placa:</label>
-        <input type="text" id="placa" name="placa" value="{{ form.placa.value|default_if_none:'' }}"
-            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 transition duration-200"
-            placeholder="Digite a placa do veículo">
-        {% if form.placa.errors %}
-        <p class="text-red-500 text-sm mt-1">{{ form.placa.errors.0 }}</p>
-        {% endif %}
-    </div>
-
-    <div class="mb-4">
         <label for="cor" class="block text-gray-700 font-semibold mb-2">Cor:</label>
         <select id="cor" name="cor"
             class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 transition duration-200">
@@ -79,6 +69,13 @@
         <p class="text-red-500 text-sm mt-1">{{ form.combustivel.errors.0 }}</p>
         {% endif %}
     </div>
+    <div class="mb-6">
+        <label for="foto" class="block text-gray-700 font-semibold mb-2">Foto do Veículo:</label>
+        <input type="file" id="foto" name="foto"
+            class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-teal-600 transition duration-200">
+        {% if form.foto.errors %}
+        <p class="text-red-500 text-sm mt-1">{{ form.foto.errors.0 }}</p>
+        {% endif %}
 
     <div class="flex justify-end">
         <button type="submit"

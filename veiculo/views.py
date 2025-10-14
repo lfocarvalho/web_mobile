@@ -1,5 +1,5 @@
 from django.urls import reverse_lazy
-from django.views.generic import ListView, CreateView
+from django.views.generic import ListView, CreateView , UpdateView, DeleteView
 from veiculo.models import Veiculo
 from datetime import datetime
 from django.contrib.auth.mixins import LoginRequiredMixin
@@ -8,6 +8,7 @@ from django.db.models import Q  # <<---- IMPORTE O Q
 from django.views import View
 from django.http import FileResponse , Http404
 from django.core.exceptions import ObjectDoesNotExist
+from django.shortcuts import get_object_or_404, redirect
 
 
 class ListarVeiculos(LoginRequiredMixin, ListView):
@@ -43,7 +44,7 @@ class CriarVeiculo(LoginRequiredMixin, CreateView):
     form_class = FormularioVeiculo
     template_name = 'veiculo/novo.h.html'
     template_name = 'veiculo/novo.html'
-    success_url = reverse_lazy('listar-veiculos')
+    success_url = reverse_lazy('veiculos:listar-veiculos')
 
 class FotoVeiculo(View):
     """
@@ -58,3 +59,22 @@ class FotoVeiculo(View):
             raise Http404('Foto não encontrada.')
         except Exception as exception:
             raise exception
+        
+class EditarVeiculo(LoginRequiredMixin, UpdateView):
+    """
+    View para editar um veículo existente.
+    """
+    model = Veiculo
+    form_class = FormularioVeiculo
+    template_name = 'veiculo/editar.html'
+    success_url = reverse_lazy('veiculos:listar-veiculos')
+
+class ExcluirVeiculo(LoginRequiredMixin, DeleteView):
+    """
+    View para excluir um veículo.
+    """
+    model = Veiculo
+    template_name = 'veiculo/excluir.html'
+    # A URL de sucesso DEVE corresponder ao 'name' da sua rota de listagem
+    success_url = reverse_lazy('veiculos:listar-veiculos')
+

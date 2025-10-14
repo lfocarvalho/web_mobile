@@ -63,13 +63,12 @@
                     </p>
 
                     <div class="flex justify-end space-x-2">
-                        <a href="#"
+                        <a href="{% url 'veiculos:editar-veiculo' veiculo.id %}"
                             class="bg-teal-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-teal-700 transition duration-300">
                             Editar
                         </a>
-                        <a href="#"
-                            class="bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300"
-                            onclick="return confirm('Tem certeza que deseja apagar este veículo?')">
+                        <a href="{% url 'veiculos:excluir-veiculo' veiculo.id %}"
+                            class="bg-red-600 text-white font-semibold py-2 px-4 rounded-lg hover:bg-red-700 transition duration-300">
                             Apagar
                         </a>
                     </div>

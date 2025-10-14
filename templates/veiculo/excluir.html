@@ -1,0 +1,29 @@
+{% extends "base.html" %}
+
+{% block titulo %} Confirmar Exclusão {% endblock %}
+
+{% block conteudo %}
+<div class="max-w-xl mx-auto bg-white p-8 rounded-lg shadow-md text-center">
+    <h2 class="text-2xl font-bold mb-4 text-gray-800">Confirmar Exclusão</h2>
+    <p class="text-gray-600 mb-6">
+        Você tem certeza que deseja apagar o veículo
+        <strong class="text-red-700">{{ object.get_marca_display }} {{ object.modelo }}</strong>?
+    </p>
+    <p class="text-gray-600 mb-8">Esta ação não poderá ser desfeita.</p>
+
+    <form method="post">
+        {% csrf_token %}
+        <div class="flex justify-center space-x-4">
+            <button type="submit"
+            
+                class="bg-red-600 text-white font-semibold py-2 px-6 rounded-lg hover:bg-red-700 transition duration-300">
+                Sim, apagar
+            </button>
+            <a href="{% url 'veiculos:listar-veiculos' %}"
+                class="bg-gray-300 text-gray-800 font-semibold py-2 px-6 rounded-lg hover:bg-gray-400 transition duration-300">
+                Cancelar
+            </a>
+        </div>
+    </form>
+</div>
+{% endblock %}

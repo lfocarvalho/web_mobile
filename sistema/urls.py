@@ -16,7 +16,7 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
-from sistema.views import Login, Logout
+from sistema.views import Login , Logout
 from django.conf import settings
 from django.conf.urls.static import static
 
@@ -24,9 +24,9 @@ urlpatterns = [
     path('', Login.as_view(), name='login'),
     path('logout/', Logout.as_view(), name='logout'),
     path('admin/', admin.site.urls),
-    path('veiculo/', include(('veiculo.urls', 'veiculo'), namespace='veiculos')),
-]
-
+    path('veiculo/', include('veiculo.urls')),
+    path('Logout/', Logout.as_view(), name='logout'),
+    path('anuncio/', include('anuncio.urls')),
+    ]
 if settings.DEBUG:
-    urlpatterns += static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
     urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
